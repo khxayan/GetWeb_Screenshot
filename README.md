@@ -22,7 +22,8 @@ GetWeb Screenshot is a sleek, premium, and fully responsive web-based applicatio
 ## 🛠️ Technology Stack
 
 - **Framework:** React 19
-- **Build Tool:** Vite 8
+- **Build Tool:** Vite 6
+- **Linter:** ESLint 9
 - **Icons:** Lucide React
 - **Styles:** Custom Vanilla CSS (featuring CSS Custom Properties for theme tokens)
 - **API Engine:** Microlink API (for cloud-based screenshot generation)
@@ -59,6 +60,16 @@ The application will start, configured to run locally on **port 3000** at **`htt
 npm run build
 ```
 
+### 5. Lint the codebase
+```bash
+npm run lint
+```
+
+### 6. Preview the production build locally
+```bash
+npm run preview
+```
+
 ---
 
 ## 📂 Project Structure
@@ -72,9 +83,11 @@ GetWeb_Screenshot/
 │   ├── App.jsx             # Core application layout, state, and API logic
 │   ├── index.css           # Styling system & glassmorphism theme rules
 │   └── main.jsx            # React root mount point
+├── .gitignore              # Git ignore file
 ├── eslint.config.js        # ESLint configuration
 ├── index.html              # HTML shell
 ├── LICENSE                 # MIT License file
+├── package-lock.json       # Dependency lockfile
 ├── package.json            # Scripts & dependencies
 ├── README.md               # Project documentation
 ├── vercel.json             # Vercel deployment configuration
