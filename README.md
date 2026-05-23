@@ -39,7 +39,8 @@ Ensure you have [Node.js](https://nodejs.org/) installed (version 18+ is recomme
 
 ### 1. Clone the repository & Navigate
 ```bash
-cd GetWeb_Screenshot-main
+git clone https://github.com/khxayan/GetWeb_Screenshot.git
+cd GetWeb_Screenshot
 ```
 
 ### 2. Install dependencies
@@ -51,7 +52,7 @@ npm install
 ```bash
 npm run dev
 ```
-The application will start, typically available at `http://localhost:5173`.
+The application will start, configured to run locally on **port 3000** at **`http://localhost:3000`**.
 
 ### 4. Build for production
 ```bash
@@ -63,15 +64,30 @@ npm run build
 ## 📂 Project Structure
 
 ```text
-GetWeb_Screenshot-main/
+GetWeb_Screenshot/
 ├── public/                 # Static assets (Favicons, images)
 ├── src/
-│   ├── assets/             # Images and design resources
 │   ├── App.css             # Supplementary template styles
 │   ├── App.jsx             # Core application layout, state, and API logic
 │   ├── index.css           # Styling system & glassmorphism theme rules
 │   └── main.jsx            # React root mount point
 ├── index.html              # HTML shell
+├── LICENSE                 # MIT License file
 ├── package.json            # Scripts & dependencies
-└── vite.config.js          # Vite build configuration
+└── vite.config.js          # Vite build configuration (locked to port 3000)
 ```
+
+## 🚀 Live Demo
+
+The project is deployed and hosted on **Vercel**! Feel free to visit the live version:
+🔗 **[https://getweb-screenshot.vercel.app/](https://getweb-screenshot.vercel.app/)**
+
+---
+
+## 📄 License
+
+This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
+
+---
+
+---
