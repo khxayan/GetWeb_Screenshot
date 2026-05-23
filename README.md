@@ -76,6 +76,8 @@ npm run preview
 
 ```text
 GetWeb_Screenshot/
+├── .github/
+│   └── dependabot.yml      # GitHub Dependabot configuration
 ├── public/                 # Static assets
 │   └── favicon.png         # Site favicon
 ├── src/
