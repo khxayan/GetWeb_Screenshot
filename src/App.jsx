@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Camera, Download, FileText, Globe, Link2, Loader2, Maximize, Monitor, Smartphone, Tablet } from 'lucide-react';
+import { Camera, Download, FileText, Globe, Link2, Loader2, Maximize, Monitor, Smartphone, Tablet, Github, Twitter } from 'lucide-react';
 import './index.css';
 
 function App() {
@@ -284,6 +284,25 @@ function App() {
           </div>
         )}
       </main>
+
+      <footer className="footer container">
+        <div className="footer-content">
+          <div className="footer-left">
+            <span>Created by <span className="author-name">Aiyan khan</span> &copy; {new Date().getFullYear()}</span>
+            <a href="https://github.com/khxayan/GetWeb_Screenshot-main/blob/main/LICENSE" target="_blank" rel="noopener noreferrer" className="license-badge">
+              MIT License
+            </a>
+          </div>
+          <div className="footer-right">
+            <a href="https://github.com/khxayan" target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="social-link">
+              <Github size={20} />
+            </a>
+            <a href="https://twitter.com/khxayan" target="_blank" rel="noopener noreferrer" aria-label="Twitter" className="social-link">
+              <Twitter size={20} />
+            </a>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

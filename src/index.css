@@ -278,7 +278,7 @@ p.subtitle {
   justify-content: center;
   margin-top: 24px;
   gap: 16px;
-  padding-bottom: 64px;
+  padding-bottom: 32px;
 }
 
 .download-btn {
@@ -330,4 +330,109 @@ p.subtitle {
 @keyframes spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
+
+/* App layout for sticky footer */
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Footer Styles */
+.footer {
+  margin-top: auto;
+  border-top: 1px solid var(--glass-border);
+  padding: 32px 0;
+  width: 100%;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.footer-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.author-name {
+  color: var(--text-primary);
+  font-weight: 600;
+  background-image: var(--gradient-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.license-badge {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.license-badge:hover {
+  border-color: var(--accent-color);
+  color: var(--text-primary);
+  background: rgba(6, 125, 247, 0.1);
+}
+
+.footer-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.social-link {
+  color: var(--text-secondary);
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  border-radius: 50%;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  text-decoration: none;
+}
+
+.social-link:hover {
+  color: var(--text-primary);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+}
+
+.social-linksvg {
+  transition: transform 0.2s ease;
+}
+
+.social-link:hover svg {
+  transform: scale(1.1);
+}
+
+@media (max-width: 600px) {
+  .footer-content {
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+  }
+  .footer-left {
+    flex-direction: column;
+    gap: 8px;
+  }
 }
