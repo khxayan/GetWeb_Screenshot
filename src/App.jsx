@@ -289,7 +289,7 @@ function App() {
         <div className="footer-content">
           <div className="footer-left">
             <span>Created by <span className="author-name">Aiyan khan</span> &copy; {new Date().getFullYear()}</span>
-            <a href="https://github.com/khxayan/GetWeb_Screenshot-main/blob/main/LICENSE" target="_blank" rel="noopener noreferrer" className="license-badge">
+            <a href="https://opensource.org/licenses/MIT" target="_blank" rel="noopener noreferrer" className="license-badge">
               MIT License
             </a>
           </div>
