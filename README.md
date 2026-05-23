@@ -65,15 +65,19 @@ npm run build
 
 ```text
 GetWeb_Screenshot/
-├── public/                 # Static assets (Favicons, images)
+├── public/                 # Static assets
+│   └── favicon.png         # Site favicon
 ├── src/
 │   ├── App.css             # Supplementary template styles
 │   ├── App.jsx             # Core application layout, state, and API logic
 │   ├── index.css           # Styling system & glassmorphism theme rules
 │   └── main.jsx            # React root mount point
+├── eslint.config.js        # ESLint configuration
 ├── index.html              # HTML shell
 ├── LICENSE                 # MIT License file
 ├── package.json            # Scripts & dependencies
+├── README.md               # Project documentation
+├── vercel.json             # Vercel deployment configuration
 └── vite.config.js          # Vite build configuration (locked to port 3000)
 ```
 
