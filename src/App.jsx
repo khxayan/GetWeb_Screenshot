@@ -288,10 +288,12 @@ function App() {
       <footer className="footer container">
         <div className="footer-content">
           <div className="footer-left">
-            <span>Created by <span className="author-name">Aiyan khan</span> &copy; {new Date().getFullYear()}</span>
             <a href="https://opensource.org/licenses/MIT" target="_blank" rel="noopener noreferrer" className="license-badge">
               MIT License
             </a>
+          </div>
+          <div className="footer-center">
+            <span>Created by <span className="author-name">Aiyan khan</span> &copy; {new Date().getFullYear()}</span>
           </div>
           <div className="footer-right">
             <a href="https://github.com/khxayan" target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="social-link">

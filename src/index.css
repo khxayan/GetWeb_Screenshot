@@ -58,6 +58,7 @@ header {
   align-items: center;
   text-align: center;
   margin-top: 64px;
+  padding-bottom: 80px; /* Guarantees a clean, premium separation before the footer line */
 }
 
 h1 {
@@ -278,7 +279,6 @@ p.subtitle {
   justify-content: center;
   margin-top: 24px;
   gap: 16px;
-  padding-bottom: 32px;
 }
 
 .download-btn {
@@ -349,21 +349,27 @@ p.subtitle {
 
 .footer-content {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
+  flex-wrap: wrap;
   gap: 16px;
-  text-align: center;
 }
 
 .footer-left {
   display: flex;
   align-items: center;
+  justify-content: flex-start;
+  flex: 1;
+}
+
+.footer-center {
+  display: flex;
+  align-items: center;
   justify-content: center;
-  flex-wrap: wrap;
-  gap: 12px;
+  flex: 1;
   color: var(--text-secondary);
   font-size: 0.9rem;
+  text-align: center;
 }
 
 .author-name {
@@ -397,6 +403,8 @@ p.subtitle {
 .footer-right {
   display: flex;
   align-items: center;
+  justify-content: flex-end;
+  flex: 1;
   gap: 12px;
 }
 
@@ -426,4 +434,19 @@ p.subtitle {
 
 .social-link:hover svg {
   transform: scale(1.1);
+}
+
+@media (max-width: 768px) {
+  .footer-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 16px;
+  }
+  .footer-left,
+  .footer-center,
+  .footer-right {
+    flex: none;
+    justify-content: center;
+    width: 100%;
+  }
 }
