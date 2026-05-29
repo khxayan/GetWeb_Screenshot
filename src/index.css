@@ -193,8 +193,47 @@ p.subtitle {
   min-width: 0;
 }
 
+/* Chrome, Safari, Edge, Opera: Remove spin buttons */
+.url-input::-webkit-outer-spin-button,
+.url-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox: Remove spin buttons */
+.url-input[type=number] {
+  -moz-appearance: textfield;
+}
+
 .url-input::placeholder {
   color: rgba(255, 255, 255, 0.3);
+}
+
+.paste-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  align-self: center;
+  margin-left: 8px;
+}
+
+.paste-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-1px);
+}
+
+.paste-btn:active {
+  transform: translateY(0);
 }
 
 .capture-btn {

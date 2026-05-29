@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Camera, Download, FileText, Globe, Link2, Loader2, Maximize, Monitor, Smartphone, Tablet, Github, Twitter } from 'lucide-react';
+import { Camera, Download, FileText, Globe, Link2, Loader2, Maximize, Monitor, Smartphone, Tablet, Github, Twitter, Clipboard } from 'lucide-react';
 import './index.css';
 
 function App() {
@@ -18,6 +18,17 @@ function App() {
     else if (device === 'Mobile') setWidth(375);
   }, [device]);
 
+  const handlePaste = async () => {
+    try {
+      const text = await navigator.clipboard.readText();
+      if (text) {
+        setUrl(text);
+      }
+    } catch (err) {
+      console.error('Failed to read clipboard: ', err);
+    }
+  };
+
   const handleCapture = async (e) => {
     e.preventDefault();
     if (!url) return;
@@ -33,23 +44,24 @@ function App() {
     try {
       // Using Microlink API to capture full page screenshot
       let apiUrl = `https://api.microlink.io?url=${encodeURIComponent(targetUrl)}&screenshot=true&meta=false&fullPage=true`;
-      
+
       if (format === 'JPG') {
         apiUrl += '&screenshot.type=jpeg';
       } else {
         apiUrl += '&screenshot.type=png';
       }
-      
-      apiUrl += `&viewport.width=${width}`;
+
+      const targetWidth = width || 10000;
+      apiUrl += `&viewport.width=${targetWidth}`;
       if (device === 'Mobile') {
         apiUrl += '&viewport.isMobile=true';
       }
-      
+
       const response = await fetch(apiUrl);
       if (!response.ok) throw new Error('Failed to capture screenshot');
-      
+
       const data = await response.json();
-      
+
       if (data.status === 'success' && data.data?.screenshot?.url) {
         setScreenshotData({
           imageUrl: data.data.screenshot.url,
@@ -67,6 +79,10 @@ function App() {
 
   const handleDownload = async () => {
     if (!screenshotData?.imageUrl) return;
+    const timestamp = new Date().getTime();
+    const fileExt = format === 'JPG' ? 'jpg' : 'png';
+    const baseName = `screenshot-${timestamp}`;
+
     try {
       // Use a CORS proxy to bypass CDN CORS issues
       const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(screenshotData.imageUrl)}`;
@@ -75,8 +91,7 @@ function App() {
       const blobUrl = window.URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = blobUrl;
-      const fileExt = format === 'JPG' ? 'jpg' : 'png';
-      link.download = `screenshot-${new Date().getTime()}.${fileExt}`;
+      link.download = `${baseName}.${fileExt}`;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -86,6 +101,31 @@ function App() {
       // Fallback: open in new tab
       window.open(screenshotData.imageUrl, '_blank');
     }
+
+    // Small delay before downloading JSON to avoid browser blocking multiple downloads
+    setTimeout(() => {
+      try {
+        const metadata = {
+          url: screenshotData.targetUrl,
+          format: fileExt,
+          device,
+          viewportWidth: width || 10000,
+          capturedAt: new Date(timestamp).toISOString(),
+          imageUrl: screenshotData.imageUrl,
+        };
+        const jsonBlob = new Blob([JSON.stringify(metadata, null, 2)], { type: 'application/json' });
+        const jsonBlobUrl = window.URL.createObjectURL(jsonBlob);
+        const jsonLink = document.createElement('a');
+        jsonLink.href = jsonBlobUrl;
+        jsonLink.download = `${baseName}.${fileExt}.json`;
+        document.body.appendChild(jsonLink);
+        jsonLink.click();
+        document.body.removeChild(jsonLink);
+        window.URL.revokeObjectURL(jsonBlobUrl);
+      } catch (err) {
+        console.error('Failed to download JSON metadata', err);
+      }
+    }, 300);
   };
 
   const handleDownloadPDF = () => {
@@ -113,7 +153,7 @@ function App() {
       printWindow.document.close();
 
       const img = printWindow.document.getElementById('ss');
-      
+
       const triggerPrint = () => {
         setTimeout(() => {
           printWindow.print();
@@ -167,6 +207,15 @@ function App() {
                 onChange={(e) => setUrl(e.target.value)}
                 disabled={status === 'loading'}
               />
+              <button
+                type="button"
+                className="paste-btn"
+                onClick={handlePaste}
+                title="Paste from clipboard"
+              >
+                <Clipboard size={16} />
+                <span>Paste</span>
+              </button>
             </div>
           </div>
 
@@ -196,7 +245,22 @@ function App() {
                 type="number"
                 className="url-input"
                 value={width}
-                onChange={(e) => setWidth(Number(e.target.value))}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  if (val === '') {
+                    setWidth('');
+                  } else {
+                    const num = Number(val);
+                    setWidth(num > 10000 ? 10000 : num);
+                  }
+                }}
+                onBlur={() => {
+                  if (!width || Number(width) <= 0) {
+                    setWidth(10000);
+                  }
+                }}
+                onWheel={(e) => e.target.blur()}
+                placeholder="10000"
                 disabled={status === 'loading'}
               />
             </div>
@@ -218,8 +282,8 @@ function App() {
             </div>
           </div>
 
-          <button 
-            type="submit" 
+          <button
+            type="submit"
             className="capture-btn submit-btn"
             disabled={!url || status === 'loading'}
           >
@@ -253,13 +317,13 @@ function App() {
                 {screenshotData?.targetUrl || url}
               </div>
             </div>
-            
+
             {status === 'loading' ? (
               <div className="skeleton-loader"></div>
             ) : (
-              <img 
-                src={screenshotData.imageUrl} 
-                alt={`Screenshot of ${screenshotData.targetUrl}`} 
+              <img
+                src={screenshotData.imageUrl}
+                alt={`Screenshot of ${screenshotData.targetUrl}`}
                 className="screenshot-image"
                 loading="lazy"
               />
