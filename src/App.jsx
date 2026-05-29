@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Camera, Download, FileText, Globe, Link2, Loader2, Maximize, Monitor, Smartphone, Tablet, Github, Twitter, Clipboard } from 'lucide-react';
 import './index.css';
 
 function App() {
+  const urlInputRef = useRef(null);
   const [url, setUrl] = useState('');
   const [device, setDevice] = useState('Desktop'); // Desktop, Tablet, Mobile
   const [width, setWidth] = useState(1920);
@@ -51,7 +52,8 @@ function App() {
         apiUrl += '&screenshot.type=png';
       }
 
-      const targetWidth = width || 10000;
+      const rawWidth = Number(width) || 10000;
+      const targetWidth = Math.max(200, Math.min(10000, rawWidth));
       apiUrl += `&viewport.width=${targetWidth}`;
       if (device === 'Mobile') {
         apiUrl += '&viewport.isMobile=true';
@@ -101,31 +103,6 @@ function App() {
       // Fallback: open in new tab
       window.open(screenshotData.imageUrl, '_blank');
     }
-
-    // Small delay before downloading JSON to avoid browser blocking multiple downloads
-    setTimeout(() => {
-      try {
-        const metadata = {
-          url: screenshotData.targetUrl,
-          format: fileExt,
-          device,
-          viewportWidth: width || 10000,
-          capturedAt: new Date(timestamp).toISOString(),
-          imageUrl: screenshotData.imageUrl,
-        };
-        const jsonBlob = new Blob([JSON.stringify(metadata, null, 2)], { type: 'application/json' });
-        const jsonBlobUrl = window.URL.createObjectURL(jsonBlob);
-        const jsonLink = document.createElement('a');
-        jsonLink.href = jsonBlobUrl;
-        jsonLink.download = `${baseName}.${fileExt}.json`;
-        document.body.appendChild(jsonLink);
-        jsonLink.click();
-        document.body.removeChild(jsonLink);
-        window.URL.revokeObjectURL(jsonBlobUrl);
-      } catch (err) {
-        console.error('Failed to download JSON metadata', err);
-      }
-    }, 300);
   };
 
   const handleDownloadPDF = () => {
@@ -200,6 +177,7 @@ function App() {
                 <Globe size={20} />
               </div>
               <input
+                ref={urlInputRef}
                 type="text"
                 className="url-input"
                 placeholder="example.com"
@@ -232,7 +210,7 @@ function App() {
                   {d === 'Desktop' && <Monitor size={16} />}
                   {d === 'Tablet' && <Tablet size={16} />}
                   {d === 'Mobile' && <Smartphone size={16} />}
-                  {d}
+                  <span>{d}</span>
                 </button>
               ))}
             </div>
@@ -245,6 +223,8 @@ function App() {
                 type="number"
                 className="url-input"
                 value={width}
+                min="200"
+                max="10000"
                 onChange={(e) => {
                   const val = e.target.value;
                   if (val === '') {
@@ -255,7 +235,12 @@ function App() {
                   }
                 }}
                 onBlur={() => {
-                  if (!width || Number(width) <= 0) {
+                  const num = Number(width);
+                  if (width === '' || isNaN(num)) {
+                    setWidth(10000);
+                  } else if (num < 200) {
+                    setWidth(200);
+                  } else if (num > 10000) {
                     setWidth(10000);
                   }
                 }}
@@ -369,6 +354,43 @@ function App() {
           </div>
         </div>
       </footer>
+
+      {/* Floating Actions Group in Bottom-Right Corner */}
+      <div className="floating-actions-group">
+        {status === 'success' && (
+          <>
+            <button
+              className="floating-btn download-img"
+              onClick={handleDownload}
+              title="Download Image & JSON"
+              aria-label="Download Image"
+            >
+              <Download size={20} />
+            </button>
+            <button
+              className="floating-btn download-pdf"
+              onClick={handleDownloadPDF}
+              title="Download as PDF"
+              aria-label="Download as PDF"
+            >
+              <FileText size={20} />
+            </button>
+          </>
+        )}
+        <button
+          className="floating-btn scroll-to-input"
+          onClick={() => {
+            urlInputRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            setTimeout(() => {
+              urlInputRef.current?.focus();
+            }, 500);
+          }}
+          title="Enter URL"
+          aria-label="Scroll to URL Input"
+        >
+          <Globe size={20} />
+        </button>
+      </div>
     </div>
   );
 }
