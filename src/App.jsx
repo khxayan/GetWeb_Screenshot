@@ -342,13 +342,13 @@ function App() {
             </a>
           </div>
           <div className="footer-center">
-            <span>Created by <a href="https://github.com/khxayan" target="_blank" rel="noopener noreferrer" className="author-name">Aiyan khan</a> &copy; {new Date().getFullYear()}</span>
+            <span>Created by <a href="https://github.com/khxaiyan" target="_blank" rel="noopener noreferrer" className="author-name">Aiyan khan</a> &copy; {new Date().getFullYear()}</span>
           </div>
           <div className="footer-right">
-            <a href="https://github.com/khxayan/GetWeb_Screenshot" target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="social-link">
+            <a href="https://github.com/khxaiyan/GetWeb_Screenshot" target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="social-link">
               <Github size={20} />
             </a>
-            <a href="https://twitter.com/khxayan" target="_blank" rel="noopener noreferrer" aria-label="Twitter" className="social-link">
+            <a href="https://twitter.com/khxaiyan" target="_blank" rel="noopener noreferrer" aria-label="Twitter" className="social-link">
               <Twitter size={20} />
             </a>
           </div>
