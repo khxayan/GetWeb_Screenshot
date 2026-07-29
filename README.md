@@ -1,3 +1,11 @@
+<div align="center">
+    <img src="./public/favicon.png" width="128" height="128" alt="GetWeb Screenshot Logo"/>
+    <h1>GetWeb Screenshot</h1>
+    <p>A modern web application for capturing high-quality website screenshots instantly.</p>
+</div>
+
+---
+
 # 📸 GetWeb Screenshot
 
 GetWeb Screenshot is a sleek, premium, and fully responsive web-based application designed to capture high-quality screenshots of any webpage instantly. Powered by React, Vite, and the Microlink API, it delivers a gorgeous glassmorphic interface with robust download and export options.
